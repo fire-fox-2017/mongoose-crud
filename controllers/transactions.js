@@ -2,7 +2,15 @@ const Transaction = require('../models/transactions')
 const methods = {}
 
 methods.insertOne = function(req, res){
-  Transaction.create(req.body, function(error, record){
+  Transaction.create({
+    memberid: req.body.memberid,
+      days: req.body.days,
+      out_date: req.body.out_date,
+      due_date: req.body.due_date,
+      in_date: req.body.in_date,
+      fine: req.body.fine,
+      booklist: req.body.booklist
+  }, function(error, record){
     if(error){
       res.json({error})
     } else {

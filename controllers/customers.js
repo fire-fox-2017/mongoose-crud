@@ -2,7 +2,14 @@ const Customer = require('../models/customers')
 const methods = {}
 
 methods.insertOne = function(req, res){
-  Customer.create(req.body, function(error, record){
+  Customer.create(
+    {
+      name: req.body.name,
+      memberid: req.body.memberid,
+      address: req.body.address,
+      zipcode: req.body.zipcode,
+      phone: req.body.phone
+    }, function(error, record){
     if(error){
       res.json({error})
     } else {

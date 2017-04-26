@@ -2,7 +2,13 @@ const Book = require('../models/books')
 const methods = {}
 
 methods.insertOne = function(req, res){
-  Book.create(req.body, function(error, record){
+  Book.create({
+    isbn: req.body.isbn,
+    title: req.body.title,
+    author: req.body.author,
+    category: req.body.category,
+    stock: req.body.stock
+  }, function(error, record){
     if(error){
       res.json({error})
     } else {
@@ -42,5 +48,22 @@ methods.deleteById = function(req, res){
     }
   })
 }
+
+// methods.generateBooks = function(req, res){
+//
+//   Book.create({
+//     isbn: req.body.isbn,
+//     title: req.body.title,
+//     author: faker.name.findName(),
+//     category: req.body.category,
+//     stock: req.body.stock
+//   }, function(error, record){
+//     if(error){
+//       res.json({error})
+//     } else {
+//       res.json(record)
+//     }
+//   })
+// }
 
 module.exports = methods
