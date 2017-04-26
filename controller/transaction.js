@@ -4,10 +4,16 @@ const transaction = require('../models/transaction');
 let controller = {}
 
 //findall
+// //,(err, users)=>{
+//   if(err) throw err
+//   res.send(users)
+// }
 controller.findall = (req,res,next)=>{
-  transaction.find({},(err, users)=>{
+  transaction.find({})
+  .populate('booklist memberid')
+  .exec((err, user)=>{
     if(err) throw err
-    res.send(users)
+    res.send(user)
   })
 }
 

@@ -9,6 +9,6 @@ const customersSchema = new Schema({
   phone : String
 })
 
-let customers = mongoose.model('Customer', customersSchema)
+let Customer = mongoose.model('Customer', customersSchema)
 
-module.exports = customers;
+module.exports = Customer;
