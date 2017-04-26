@@ -1,0 +1,23 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+// let book = new Schema({
+//   book: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'books'
+//   }
+// })
+
+let transactionSchema = new Schema({
+  memberId: { type: String },
+  days: { type: Number },
+  out_date: { type: Date, default: Date.now },
+  due_date: { type: Date, default: Date.now },
+  in_date: { type: Date, default: Date.now },
+  fine: { type: Number },
+  booklist: [{ type: Schema.Types.ObjectId, ref: 'books' }]
+})
+
+let transactions = mongoose.model('transactions', transactionSchema)
+
+module.exports = transactions
