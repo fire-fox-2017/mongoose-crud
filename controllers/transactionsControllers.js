@@ -1,22 +1,18 @@
-var Customer = require('../models/customer');
+var Transaction = require('../models/transaction');
 module.exports = {
   getall: (req, res, next) => {
-    Customer.find().exec(function(err, result) {
-      if (result) {
-        res.json(result);
-      } else {
-        res.send(`ERR getall :\n ${err}`);
-      }
-    });
+    Transaction.find()
+      .populate('booklist')
+      .exec(function(err, result) {
+        if (result) {
+          res.json(result);
+        } else {
+          res.send(`ERR getall :\n ${err}`);
+        }
+      });
   },
   create: (req, res, next) => {
-    Customer.create({
-      name: req.body.name,
-      memberid: req.body.memberid,
-      address: req.body.address,
-      zipcode: req.body.zipcode,
-      phone: req.body.phone
-    }, function(error, result) {
+    Transaction.create(req.body, function(error, result) {
       if (result) {
         res.json(result);
       } else {
@@ -26,7 +22,7 @@ module.exports = {
   },
   delete: (req, res, next) => {
     let id = req.params.id;
-    Customer.remove({
+    Transaction.remove({
       _id: id
     }, function(err) {
       if (!err) {
@@ -38,19 +34,21 @@ module.exports = {
   },
   update: (req, res, next) => {
     let id = req.params.id;
-    Customer.findOne({
+    Transaction.findOne({
       _id: id
     }).exec(function(err, result) {
       if (result) {
-        Customer.update({
+        Transaction.update({
           _id: id
         }, {
           $set: {
-            name: req.body.name || result.name,
             memberid: req.body.memberid || result.memberid,
-            address: req.body.address || result.address,
-            zipcode: req.body.zipcode || result.zipcode,
-            phone: req.body.phone || result.phone
+            days: req.body.days || result.days,
+            out_date: req.body.out_date || result.out_date,
+            due_date: req.body.due_date || result.due_date,
+            in_date: req.body.in_date || result.in_date,
+            fine: req.body.fine || result.fine,
+            booklist: req.body.booklist || result.booklist
           }
         }, function(err, result) {
           if (result) {
