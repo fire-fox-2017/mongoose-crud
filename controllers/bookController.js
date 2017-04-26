@@ -13,7 +13,7 @@ methods.insertOne = (req, res, next) => {
                 message: 'Error waktu insert Book'
             })
         })
-}
+} // insertOne
 
 methods.getAll = (req, res, next) => {
     Book.find()
@@ -26,7 +26,7 @@ methods.getAll = (req, res, next) => {
                 message: 'Error waktu getAll Book'
             })
         })
-}
+} //getAll
 
 methods.getById = (req, res, next) => {
     Book.findById(req.params.id)
@@ -39,7 +39,7 @@ methods.getById = (req, res, next) => {
                 message: 'Error waktu getById Book'
             })
         })
-}
+} // getById
 
 methods.updateById = (req, res, next) => {
     Book.updateOne({
@@ -65,10 +65,8 @@ methods.updateById = (req, res, next) => {
 } //updateById
 
 methods.deleteById = (req, res, next) => {
-    Book.destroy({
-            where: {
-                id: req.params.id
-            }
+    Book.deleteOne({
+            "_id": new mongo.ObjectID(req.params.id)
         })
         .then((record) => {
             res.json(record)
@@ -79,6 +77,6 @@ methods.deleteById = (req, res, next) => {
                 message: 'Error waktu deleteById Book'
             })
         })
-}
+} // deleteById
 
 module.exports = methods
