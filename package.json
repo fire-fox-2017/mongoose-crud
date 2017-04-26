@@ -1,0 +1,31 @@
+{
+  "name": "mongoose-crud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edimdendidiwangga/mongoose-crud.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edimdendidiwangga/mongoose-crud/issues"
+  },
+  "homepage": "https://github.com/edimdendidiwangga/mongoose-crud#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "faker": "^4.1.0",
+    "mongoose": "^4.9.6",
+    "morgan": "^1.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
