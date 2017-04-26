@@ -12,7 +12,7 @@ var books = require('./routes/books');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bookscrud');
+mongoose.connect('mongodb://localhost/mongoosecrud');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

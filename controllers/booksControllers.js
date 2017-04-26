@@ -15,25 +15,18 @@ module.exports = {
     let author = req.body.author;
     let category = req.body.category;
     let stock = req.body.stock;
-    MongoClient.connect(url, function(err, db) {
-      console.log("Connected successfully to server bookscrud");
-
-      var collection = db.collection('books');
-      // insert documents
-      collection.insertOne({
-        isbn: isbn,
-        title: title,
-        author: author,
-        category: category,
-        stock: stock
-      }, function(err, result) {
-        if (result) {
-          res.json(result);
-        } else {
-          res.send(`ERR input :\n ${err}`);
-        }
-        db.close();
-      });
+    Book.create({
+      isbn: isbn,
+      title: title,
+      author: author,
+      category: category,
+      stock: stock
+    }, function(error, result) {
+      if (result) {
+        res.json(result);
+      } else {
+        res.send(`ERR input :\n ${error}`);
+      }
     });
   },
   delete: (req, res, next) => {
