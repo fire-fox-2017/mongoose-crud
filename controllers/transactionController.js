@@ -1,4 +1,5 @@
-var Transaction = require('../models')
+var mongo = require('mongodb')
+var Transaction = require('../models/transaction')
 var methods = {}
 
 methods.insertOne = (req, res, next) => {
@@ -9,23 +10,23 @@ methods.insertOne = (req, res, next) => {
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu insert Customer'
+                message: 'Error waktu insert Transaction'
             })
         })
-}
+} // insertOne
 
 methods.getAll = (req, res, next) => {
-    Transaction.findAll()
+    Transaction.find()
         .then(records => {
             res.json(records)
         })
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu getAll Customer'
+                message: 'Error waktu getAll Transaction'
             })
         })
-}
+} //getAll
 
 methods.getById = (req, res, next) => {
     Transaction.findById(req.params.id)
@@ -35,33 +36,46 @@ methods.getById = (req, res, next) => {
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu getById Customer'
+                message: 'Error waktu getById Transaction'
             })
         })
-}
+} // getById
 
 methods.updateById = (req, res, next) => {
-    Transaction.update(req.body, {
-            where: {
-                id: req.params.id
-            }
-        })
-        .then((record) => {
-            res.json(record)
+    Transaction.findById(req.params.id)
+        .then(record => {
+            Transaction.updateOne({
+                    "_id": new mongo.ObjectID(req.params.id)
+                }, {
+                    $set: {
+                        "name": req.body.name || record.name,
+                        "memberid": req.body.memberid || record.memberid,
+                        "address": req.body.address || record.address,
+                        "zipcode": req.body.zipcode || record.zipcode,
+                        "phone": req.body.phone || record.phone
+                    }
+                })
+                .then((record) => {
+                    res.json(record)
+                })
+                .catch(err => {
+                    res.json({
+                        err,
+                        message: 'Error waktu update Transaction'
+                    })
+                })
         })
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu updateById Customer'
+                message: 'Data tidak ada'
             })
         })
 } //updateById
 
 methods.deleteById = (req, res, next) => {
-    Transaction.destroy({
-            where: {
-                id: req.params.id
-            }
+    Transaction.deleteOne({
+            "_id": new mongo.ObjectID(req.params.id)
         })
         .then((record) => {
             res.json(record)
@@ -69,9 +83,9 @@ methods.deleteById = (req, res, next) => {
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu deleteById Customer'
+                message: 'Error waktu deleteById Transaction'
             })
         })
-}
+} // deleteById
 
 module.exports = methods

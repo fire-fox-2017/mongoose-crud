@@ -12,15 +12,15 @@ let transactionSchema = new Schema({
     },
     out_date: {
         type: String,
-        default: new Date().toISOString
+        default: new Date().toISOString()
     },
     due_date: {
         type: String,
-        default: new Date().toISOString
+        default: new Date().toISOString()
     },
     in_date: {
         type: String,
-        default: new Date().toISOString
+        default: new Date().toISOString()
     },
     fine: {
         type: Number,
