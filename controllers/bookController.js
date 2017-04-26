@@ -42,24 +42,33 @@ methods.getById = (req, res, next) => {
 } // getById
 
 methods.updateById = (req, res, next) => {
-    Book.updateOne({
-            "_id": new mongo.ObjectID(req.params.id)
-        }, {
-            $set: {
-                "isbn": req.body.isbn,
-                "title": req.body.title,
-                "author": req.body.author,
-                "category": req.body.category,
-                "stock": req.body.stock
-            }
-        })
-        .then((record) => {
-            res.json(record)
+    Book.findById(req.params.id)
+        .then(record => {
+            Book.updateOne({
+                    "_id": new mongo.ObjectID(req.params.id)
+                }, {
+                    $set: {
+                        "isbn": req.body.isbn || record.isbn,
+                        "title": req.body.title || record.title,
+                        "author": req.body.author || record.author,
+                        "category": req.body.category || record.category,
+                        "stock": req.body.stock || record.stock
+                    }
+                })
+                .then((record) => {
+                    res.json(record)
+                })
+                .catch(err => {
+                    res.json({
+                        err,
+                        message: 'Error waktu update Book'
+                    })
+                })
         })
         .catch(err => {
             res.json({
                 err,
-                message: 'Error waktu updateById Book'
+                message: 'Data tidak ada'
             })
         })
 } //updateById
