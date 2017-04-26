@@ -12,7 +12,9 @@ methods.insertOne = function(req, res){
 }
 
 methods.getAll = function(req, res){
-  Transaction.find({}, function(error, records){
+  Transaction.find({})
+    .populate('booklist')
+    .exec((error, records)=>{
     if(error){
       res.json({error})
     } else {
