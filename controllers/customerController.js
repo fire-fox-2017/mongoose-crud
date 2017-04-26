@@ -1,3 +1,4 @@
+var mongo = require('mongodb')
 var Customer = require('../models/customer')
 var methods = {}
 
