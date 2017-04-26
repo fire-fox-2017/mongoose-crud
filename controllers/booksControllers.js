@@ -43,26 +43,29 @@ module.exports = {
   },
   update: (req, res, next) => {
     let id = req.params.id;
-    let isbn = req.body.isbn;
-    let title = req.body.title;
-    let author = req.body.author;
-    let category = req.body.category;
-    let stock = req.body.stock;
-    Book.update({
+    Book.findOne({
       _id: id
-    }, {
-      $set: {
-        isbn: isbn,
-        title: title,
-        author: author,
-        category: category,
-        stock: stock
-      }
-    }, function(err, result) {
+    }).exec(function(err, result) {
       if (result) {
-        res.json(result);
+        Book.update({
+          _id: id
+        }, {
+          $set: {
+            isbn: req.body.isbn || result.isbn,
+            title: req.body.title || result.title,
+            author: req.body.author || result.author,
+            category: req.body.category || result.category,
+            stock: req.body.stock || result.stock
+          }
+        }, function(err, result) {
+          if (result) {
+            res.json(result);
+          } else {
+            res.send(`ERR Update :\n ${err}`);
+          }
+        });
       } else {
-        res.send(`ERR Update :\n ${err}`);
+        res.send(`ERR getall :\n ${err}`);
       }
     });
   }
