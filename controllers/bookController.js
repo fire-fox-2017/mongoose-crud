@@ -32,13 +32,6 @@ methods.insertBook = (req, res) => {
 }
 
 methods.updateBook = (req, res) => {
-    // Book.findByIdAndUpdate(req.params.id, req.body, (error, record) => {
-    //     if(error) {
-    //         res.json(error)
-    //     } else {
-    //         res.json(record)
-    //     }
-    // })
     Book.findById(req.params.id, (error, record) => {
         if (error) {
             res.json(error)
