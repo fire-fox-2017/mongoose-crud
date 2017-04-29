@@ -26,3 +26,11 @@ Mongoose-CRUD is example of create, read, update, and delete of MongoDB database
 
 
 ## How to Use
+
+First install the dependencies and then start the server as follows:
+
+```sh
+$ npm install
+$ npm start
+```
+The routes can be accessed via http://localhost:3000, recommended to be accessed using Postman etc.
