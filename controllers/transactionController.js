@@ -24,7 +24,7 @@ methods.getAll = (req, res) => {
                     err
                 })
             } else {
-                console.log(records)
+                // console.log(records)
                 res.json(records)
             }
         })
@@ -43,75 +43,49 @@ methods.getById = (req, res, next) => {
         })
 } // getById
 
-// methods.updateById = (req, res, next) => {
-//     Transaction.findById(req.params.id)
-//         .then(record => {
-//             Transaction.updateOne({
-//                     "_id": new mongo.ObjectID(req.params.id)
-//                 }, {
-//                     $set: {
-//                         "name": req.body.name || record.name,
-//                         "memberid": req.body.memberid || record.memberid,
-//                         "address": req.body.address || record.address,
-//                         "zipcode": req.body.zipcode || record.zipcode,
-//                         "phone": req.body.phone || record.phone
-//                     }
-//                 })
-//                 .then((record) => {
-//                     res.json(record)
-//                 })
-//                 .catch(err => {
-//                     res.json({
-//                         err,
-//                         message: 'Error waktu update Transaction'
-//                     })
-//                 })
-//         })
-//         .catch(err => {
-//             res.json({
-//                 err,
-//                 message: 'Data tidak ada'
-//             })
-//         })
-// } //updateById
-
 methods.updateById = (req, res, next) => {
-    Transaction.findByIdAndUpdate(req.params.id, {
-            $set: {
-                "name": req.body.name || record.name,
-                "memberid": req.body.memberid || record.memberid,
-                "address": req.body.address || record.address,
-                "zipcode": req.body.zipcode || record.zipcode,
-                "phone": req.body.phone || record.phone
-            }
-        }, {
-            new: true // biar data yg ditampilkan data yg terupdate
+    Transaction.findById(req.params.id)
+        .then(record => {
+            Transaction.updateOne({
+                    "_id": new mongo.ObjectID(req.params.id)
+                }, {
+                    $set: {
+                        "memberid": req.body.memberid || record.memberid,
+                        "days": req.body.days || record.days,
+                        "fine": req.body.fine || record.fine,
+                        "booklist": req.body.booklist || record.booklist
+                    }
+                })
+                .then((record) => {
+                    res.json(record)
+                })
+                .catch(err => {
+                    res.json({
+                        err,
+                        message: 'Error waktu update Transaction'
+                    })
+                })
         })
+        .catch(err => {
+            res.json({
+                err,
+                message: 'Data tidak ada'
+            })
+        })
+} //updateById
+
+methods.deleteById = (req, res, next) => {
+    Transaction.findByIdAndRemove(req.params.id)
         .exec((err, record) => {
             if (err) {
                 res.json({
                     err,
-                    message: 'Error waktu updateById'
+                    message: 'Error waktu deleteById'
                 })
             } else {
                 res.json(record)
             }
         })
-} //updateById
-
-methods.deleteById = (req, res, next) => {
-    Transaction.deleteOne({
-            "_id": new mongo.ObjectID(req.params.id)
-        })
-        .then((record) => {
-            res.json(record)
-        })
-        .catch(err => {
-            res.json({
-                err,
-                message: 'Error waktu deleteById Transaction'
-            })
-        })
-} // deleteById
+}
 
 module.exports = methods
